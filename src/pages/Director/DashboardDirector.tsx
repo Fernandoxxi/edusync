@@ -14,7 +14,6 @@ interface AlertData {
 }
 
 const DashboardDirector: React.FC = () => {
-  const [timeRange, setTimeRange] = useState<'semana' | 'mes' | 'trimestre'>('mes');
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAlert, setSelectedAlert] = useState<AlertData | null>(null);
 
@@ -28,7 +27,7 @@ const DashboardDirector: React.FC = () => {
 
   // Alertas
   const alertasData: AlertData[] = [
-    { estudiante: "Antoni Rodriguez", grado: "3ro", seccion: "A", materia: "Matemáticas", problema: "Bajas calificaciones en los ultimos examenes", prioridad: "high", fecha: "2025-09-21" },
+    { estudiante: "Antoni Rodriguez", grado: "3ro", seccion: "A", materia: "Matemáticas", problema: "Bajas calificaciones", prioridad: "high", fecha: "2025-09-21" },
     { estudiante: "Fernando Manrique", grado: "5to", seccion: "C", materia: "Ciencias", problema: "Baja participación en laboratorios", prioridad: "medium", fecha: "2025-09-15" },
     { estudiante: "Jesus Palomino", grado: "2do", seccion: "B", materia: "Lenguaje", problema: "Dificultades en comprensión lectora", prioridad: "medium", fecha: "2025-09-10" },
     { estudiante: "Ricardo Mendoza", grado: "4to", seccion: "D", materia: "Inglés", problema: "Asistencia irregular", prioridad: "low", fecha: "2025-08-28" }
@@ -36,27 +35,12 @@ const DashboardDirector: React.FC = () => {
 
   // Filtrar alertas por búsqueda y período
   const filteredAlerts = alertasData.filter(alerta => {
-    const alertaDate = new Date(alerta.fecha);
-    const today = new Date();
-
     const matchesSearch =
       alerta.grado.toLowerCase().includes(searchTerm.toLowerCase()) ||
       alerta.materia.toLowerCase().includes(searchTerm.toLowerCase()) ||
       alerta.seccion.toLowerCase().includes(searchTerm.toLowerCase());
 
     if (!matchesSearch) return false;
-
-    if (timeRange === 'semana') {
-      const weekAgo = new Date(today);
-      weekAgo.setDate(today.getDate() - 7);
-      return alertaDate >= weekAgo;
-    } else if (timeRange === 'mes') {
-      return alertaDate.getMonth() === today.getMonth() && alertaDate.getFullYear() === today.getFullYear();
-    } else if (timeRange === 'trimestre') {
-      const month = today.getMonth();
-      const quarterStartMonth = month - (month % 3);
-      return alertaDate.getMonth() >= quarterStartMonth && alertaDate.getMonth() <= quarterStartMonth + 2 && alertaDate.getFullYear() === today.getFullYear();
-    }
 
     return true;
   });
@@ -107,13 +91,6 @@ const DashboardDirector: React.FC = () => {
             <div className="relative">
               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
               <input type="text" placeholder="Buscar grado o materia" value={searchTerm} onChange={handleSearch} className="pl-10 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-            <div className="relative">
-              <select value={timeRange} onChange={(e) => setTimeRange(e.target.value as any)} className="bg-white border border-gray-300 rounded-lg px-2 py-2 text-sm">
-                <option value="semana">Esta semana</option>
-                <option value="mes">Este mes</option>
-                <option value="trimestre">Este trimestre</option>
-              </select>
             </div>
           </div>
         </div>
