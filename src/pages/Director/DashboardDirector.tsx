@@ -36,9 +36,8 @@ const DashboardDirector: React.FC = () => {
   // Filtrar alertas por búsqueda y período
   const filteredAlerts = alertasData.filter(alerta => {
     const matchesSearch =
-      alerta.grado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      alerta.materia.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      alerta.seccion.toLowerCase().includes(searchTerm.toLowerCase());
+      alerta.estudiante.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      alerta.materia.toLowerCase().includes(searchTerm.toLowerCase());
 
     if (!matchesSearch) return false;
 
@@ -69,7 +68,6 @@ const DashboardDirector: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Dashboard - Nivel Secundaria</h1>
           <p className="text-gray-600 mt-1">
             Resumen académico - {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
