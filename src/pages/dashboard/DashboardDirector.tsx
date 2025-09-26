@@ -83,7 +83,7 @@ const mockData = {
 };
 
 const DashboardDirector: React.FC = () => {
-  const [activeView, setActiveView] = useState('overview');
+  //const [activeView, setActiveView] = useState('overview');
 
   const MetricCard = ({ title, value, subtitle, icon, color, trend }: any) => (
     <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all">
