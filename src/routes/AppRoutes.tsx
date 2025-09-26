@@ -7,12 +7,17 @@ import DashboardLayout from "../layouts/DashboardLayout";
 
 // Pages
 import Login from "../pages/Login";
-import DashboardDirector from "../pages/dashboard/DashboardDirector";
-import DashboardProfesor from "../pages/dashboard/DashboardProfesor";
-import DashboardEstudiante from "../pages/dashboard/DashboardEstudiante";
-import DashboardPadre from "../pages/dashboard/DashboardPadre";
-import GestionUsuarios from "../pages/dashboard/gestionusuarios";
-import MisTareas from "../pages/dashboard/mistareas";
+import DashboardDirector from "../pages/Director/DashboardDirector";
+import GestionUsuarios from "../pages/Director/GestionUsuarios";
+import ControlAcademico from "../pages/Director/ControlAcademico";
+import Reportes from "../pages/Director/Reportes";
+import Configuracion from "../pages/Director/Configuracion";
+import Bienestar from "../pages/Director/Bienestar";
+
+import DashboardProfesor from "../pages/Profesor/DashboardProfesor";
+import DashboardEstudiante from "../pages/Estudiante/DashboardEstudiante";
+import DashboardPadre from "../pages/Padre/DashboardPadre";
+import MisTareas from "../pages/Estudiante/mistareas";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -21,11 +26,15 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { userRole, loading } = useAuth();
 
-  if (loading) return <div className="flex justify-center items-center h-screen">Cargando...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-700">
+        Cargando...
+      </div>
+    );
 
   return <>{userRole ? children : <Navigate to="/" replace />}</>;
 };
-
 
 const AppRoutes: React.FC = () => {
   const { userRole } = useAuth();
@@ -33,30 +42,94 @@ const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Login */}
         <Route path="/" element={<Login />} />
 
+        {/* Dashboard Principal */}
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route
-            index
-            element={
-              <>
+              <DashboardLayout>
                 {userRole === "director" && <DashboardDirector />}
                 {userRole === "profesor" && <DashboardProfesor />}
                 {userRole === "estudiante" && <DashboardEstudiante />}
                 {userRole === "padre" && <DashboardPadre />}
-              </>
-            }
-          />
-          <Route path="gestion-usuarios" element={<GestionUsuarios />} />
-          <Route path="mistareas" element={<MisTareas />} />
-        </Route>
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Rutas Planas de Director */}
+        <Route
+          path="/gestion-usuarios"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <GestionUsuarios />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/academico"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ControlAcademico />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/reportes"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Reportes />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/configuracion"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Configuracion />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/bienestar"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Bienestar />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Rutas adicionales */}
+        <Route
+          path="/mistareas"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MisTareas />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Redirigir cualquier ruta desconocida al login */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
