@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 export type UserRole = "director" | "profesor" | "estudiante" | "padre" | null;
 
@@ -6,22 +6,37 @@ interface AuthContextType {
   userRole: UserRole;
   login: (role: UserRole) => void;
   logout: () => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
-  children: React.ReactNode; // ReactNode compatible con TS
+  children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userRole, setUserRole] = useState<UserRole>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (role: UserRole) => setUserRole(role);
-  const logout = () => setUserRole(null);
+  useEffect(() => {
+    const savedRole = localStorage.getItem("userRole") as UserRole;
+    if (savedRole) setUserRole(savedRole);
+    setLoading(false); // Termina la carga
+  }, []);
+
+  const login = (role: UserRole) => {
+    setUserRole(role);
+    localStorage.setItem("userRole", role || "");
+  };
+
+  const logout = () => {
+    setUserRole(null);
+    localStorage.removeItem("userRole");
+  };
 
   return (
-    <AuthContext.Provider value={{ userRole, login, logout }}>
+    <AuthContext.Provider value={{ userRole, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
