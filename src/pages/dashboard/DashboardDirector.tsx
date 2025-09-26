@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Datos mock MÁS ESTRATÉGICOS para un director
 const mockData = {
