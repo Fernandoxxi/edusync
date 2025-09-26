@@ -1,14 +1,11 @@
-// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // importante para producción
+  base: '/', // importante para SPA
   build: {
     outDir: 'dist',
-  },
-  server: {
-    open: true, // opcional, abre el navegador al iniciar
+    sourcemap: false,
   },
 });
