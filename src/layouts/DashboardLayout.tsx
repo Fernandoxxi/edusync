@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   FiHome,
@@ -12,47 +12,45 @@ import {
   FiX
 } from "react-icons/fi";
 
-const DashboardLayout: React.FC = () => {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const { userRole, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
-
+  // Menu con rutas planas
   const menuItems = {
-    director: [   
+    director: [
       { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Gestión Usuarios", path: "/dashboard/gestion-usuarios", icon: <FiUsers /> },
-      { name: "Control Académico", path: "/dashboard/control-academico", icon: <FiFileText /> },
-      { name: "Reportes", path: "/dashboard/reportes", icon: <FiAlertCircle /> },
-      { name: "Configuración", path: "/dashboard/configuracion", icon: <FiCalendar /> },
+      { name: "Gestión Usuarios", path: "/gestion-usuarios", icon: <FiUsers /> },
+      { name: "Control Académico", path: "/academico", icon: <FiFileText /> },
+      { name: "Reportes", path: "/reportes", icon: <FiAlertCircle /> },
+      { name: "Configuración", path: "/configuracion", icon: <FiCalendar /> },
+      { name: "Bienestar", path: "/bienestar", icon: <FiAlertCircle /> },
     ],
     profesor: [
       { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Mis Cursos", path: "/dashboard/cursos", icon: <FiFileText /> },
-      { name: "Calificaciones", path: "/dashboard/calificaciones", icon: <FiFileText /> },
-      { name: "Asistencia", path: "/dashboard/asistencia", icon: <FiCalendar /> },
-      { name: "Comunicaciones", path: "/dashboard/comunicaciones", icon: <FiAlertCircle /> },
-    ],
-    tutor: [
-      { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Seguimiento", path: "/dashboard/seguimiento", icon: <FiFileText /> },
-      { name: "Intervenciones", path: "/dashboard/intervenciones", icon: <FiAlertCircle /> },
-      { name: "Comunicaciones", path: "/dashboard/comunicaciones", icon: <FiUsers /> },
-      { name: "Alertas", path: "/dashboard/alertas", icon: <FiAlertCircle /> },
+      { name: "Mis Cursos", path: "/cursos", icon: <FiFileText /> },
+      { name: "Calificaciones", path: "/calificaciones", icon: <FiFileText /> },
+      { name: "Asistencia", path: "/asistencia", icon: <FiCalendar /> },
+      { name: "Comunicaciones", path: "/comunicaciones", icon: <FiAlertCircle /> },
     ],
     estudiante: [
       { name: "Mi Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Mis Tareas", path: "/dashboard/tareas", icon: <FiFileText /> },
-      { name: "Calendario", path: "/dashboard/calendario", icon: <FiCalendar /> },
-      { name: "Bienestar", path: "/dashboard/bienestar", icon: <FiAlertCircle /> },
-      { name: "Mensajes", path: "/dashboard/mensajes", icon: <FiUsers /> },
+      { name: "Mis Tareas", path: "/tareas", icon: <FiFileText /> },
+      { name: "Calendario", path: "/calendario", icon: <FiCalendar /> },
+      { name: "Bienestar", path: "/bienestar", icon: <FiAlertCircle /> },
+      { name: "Mensajes", path: "/mensajes", icon: <FiUsers /> },
     ],
     padre: [
       { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Rendimiento", path: "/dashboard/rendimiento", icon: <FiFileText /> },
-      { name: "Alertas", path: "/dashboard/alertas", icon: <FiAlertCircle /> },
-      { name: "Comunicaciones", path: "/dashboard/comunicaciones", icon: <FiUsers /> },
-      { name: "Calendario", path: "/dashboard/calendario", icon: <FiCalendar /> },
+      { name: "Rendimiento", path: "/rendimiento", icon: <FiFileText /> },
+      { name: "Alertas", path: "/alertas", icon: <FiAlertCircle /> },
+      { name: "Comunicaciones", path: "/comunicaciones", icon: <FiUsers /> },
+      { name: "Calendario", path: "/calendario", icon: <FiCalendar /> },
     ],
   };
 
@@ -156,7 +154,7 @@ const DashboardLayout: React.FC = () => {
         {/* Contenido principal */}
         <main className="flex-1 overflow-auto p-4 lg:p-6 bg-gray-100">
           <div className="max-w-7xl mx-auto min-h-full">
-            <Outlet />
+            {children}
           </div>
         </main>
       </div>
