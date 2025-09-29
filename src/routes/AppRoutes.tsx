@@ -17,13 +17,18 @@ import Bienestar from "../pages/Director/Bienestar";
 import DashboardProfesor from "../pages/Profesor/DashboardProfesor";
 import DashboardEstudiante from "../pages/Estudiante/DashboardEstudiante";
 import DashboardPadre from "../pages/Padre/DashboardPadre";
-import MisTareas from "../pages/Estudiante/mistareas";
+import MisTareas from "../pages/Estudiante/tareas";
+import Calendario from "../pages/Estudiante/calendario"
+import MiBienestar from "../pages/Estudiante/mibienestar"
+import Mensajes from "../pages/Estudiante/mensajes"
+import Rendimiento from "../pages/Estudiante/rendimiento"
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  roles?: string[]; // roles permitidos
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
   const { userRole, loading } = useAuth();
 
   if (loading)
@@ -33,7 +38,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       </div>
     );
 
-  return <>{userRole ? children : <Navigate to="/" replace />}</>;
+  // Si no hay sesión
+  if (!userRole) return <Navigate to="/" replace />;
+
+  // Si hay restricción de roles y el usuario no pertenece
+  if (roles && !roles.includes(userRole)) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
 };
 
 const AppRoutes: React.FC = () => {
@@ -45,7 +58,7 @@ const AppRoutes: React.FC = () => {
         {/* Login */}
         <Route path="/" element={<Login />} />
 
-        {/* Dashboard Principal */}
+        {/* Dashboard Principal (depende del rol) */}
         <Route
           path="/dashboard"
           element={
@@ -60,11 +73,11 @@ const AppRoutes: React.FC = () => {
           }
         />
 
-        {/* Rutas Planas de Director */}
+        {/* === Rutas de DIRECTOR === */}
         <Route
-          path="/gestion-usuarios"
+          path="/usuarios"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["director"]}>
               <DashboardLayout>
                 <GestionUsuarios />
               </DashboardLayout>
@@ -75,7 +88,7 @@ const AppRoutes: React.FC = () => {
         <Route
           path="/academico"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["director"]}>
               <DashboardLayout>
                 <ControlAcademico />
               </DashboardLayout>
@@ -86,7 +99,7 @@ const AppRoutes: React.FC = () => {
         <Route
           path="/reportes"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["director"]}>
               <DashboardLayout>
                 <Reportes />
               </DashboardLayout>
@@ -97,7 +110,7 @@ const AppRoutes: React.FC = () => {
         <Route
           path="/configuracion"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["director"]}>
               <DashboardLayout>
                 <Configuracion />
               </DashboardLayout>
@@ -108,7 +121,7 @@ const AppRoutes: React.FC = () => {
         <Route
           path="/bienestar"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["director"]}>
               <DashboardLayout>
                 <Bienestar />
               </DashboardLayout>
@@ -116,13 +129,57 @@ const AppRoutes: React.FC = () => {
           }
         />
 
-        {/* Rutas adicionales */}
+        {/* === Rutas de ESTUDIANTE === */}
         <Route
-          path="/mistareas"
+          path="/tareas"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["estudiante"]}>
               <DashboardLayout>
                 <MisTareas />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/calendario"
+          element={
+            <ProtectedRoute roles={["estudiante"]}>
+              <DashboardLayout>
+                <Calendario />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/mi-bienestar"
+          element={
+            <ProtectedRoute roles={["estudiante"]}>
+              <DashboardLayout>
+                <MiBienestar />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/mensajes"
+          element={
+            <ProtectedRoute roles={["estudiante"]}>
+              <DashboardLayout>
+                <Mensajes />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/rendimiento"
+          element={
+            <ProtectedRoute roles={["estudiante"]}>
+              <DashboardLayout>
+                <Rendimiento />
               </DashboardLayout>
             </ProtectedRoute>
           }
