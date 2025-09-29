@@ -25,7 +25,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const menuItems = {
     director: [
       { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
-      { name: "Gestión Usuarios", path: "/gestion-usuarios", icon: <FiUsers /> },
+      { name: "Gestión Usuarios", path: "/usuarios", icon: <FiUsers /> },
       { name: "Control Académico", path: "/academico", icon: <FiFileText /> },
       { name: "Reportes", path: "/reportes", icon: <FiAlertCircle /> },
       { name: "Configuración", path: "/configuracion", icon: <FiCalendar /> },
@@ -42,8 +42,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       { name: "Mi Dashboard", path: "/dashboard", icon: <FiHome /> },
       { name: "Mis Tareas", path: "/tareas", icon: <FiFileText /> },
       { name: "Calendario", path: "/calendario", icon: <FiCalendar /> },
-      { name: "Bienestar", path: "/bienestar", icon: <FiAlertCircle /> },
+      { name: "Bienestar", path: "/mi-bienestar", icon: <FiAlertCircle /> },
       { name: "Mensajes", path: "/mensajes", icon: <FiUsers /> },
+      { name: "Rendimiento", path: "/rendimiento", icon: <FiUsers /> },
     ],
     padre: [
       { name: "Dashboard", path: "/dashboard", icon: <FiHome /> },
@@ -152,7 +153,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         </header>
 
         {/* Contenido principal */}
-        <main className="flex-1 overflow-auto p-4 lg:p-6 bg-gray-100">
+        <main className={`flex-1 overflow-auto bg-gray-100 ${
+          location.pathname === "/mensajes" ? "" : "p-4 lg:p-6"
+        }`}>
           <div className="max-w-7xl mx-auto min-h-full">
             {children}
           </div>
