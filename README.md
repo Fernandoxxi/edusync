@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# 🎓 Sistema de Gestión Escolar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Plataforma web para la gestión académica y la comunicación entre estudiantes, padres de familia, docentes y directivos.**
 
-Currently, two official plugins are available:
+Sistema diseñado para centralizar la administración escolar en una sola aplicación, facilitando la organización académica, la gestión de usuarios, el control de horarios y la comunicación entre los integrantes de la comunidad educativa.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📌 Descripción del proyecto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+El **Sistema de Gestión Escolar** es una aplicación web desarrollada con React, TypeScript y Vite, orientada a mejorar la organización y la comunicación dentro de una institución educativa.
 
-## Expanding the ESLint configuration
+La plataforma cuenta con cuatro perfiles de usuario, cada uno con funcionalidades específicas según sus responsabilidades dentro del colegio. Además, incorpora un sistema de chat integrado que permite la comunicación entre los usuarios desde una misma aplicación.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tecnologías utilizadas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+| Tecnología | Descripción |
+|---|---|
+| ⚛️ React | Construcción de interfaces de usuario. |
+| 📘 TypeScript | Tipado estático y desarrollo más seguro. |
+| ⚡ Vite | Herramienta de desarrollo y compilación. |
+| 🧹 ESLint | Análisis estático y mantenimiento de la calidad del código. |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎯 Objetivos del sistema
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Facilitar la gestión de usuarios y responsabilidades dentro de la institución educativa.
+- Mejorar la comunicación entre estudiantes, padres, profesores y directivos.
+- Centralizar el acceso a la información escolar.
+- Simplificar la organización y consulta de horarios académicos.
+- Proporcionar una plataforma web organizada y fácil de utilizar.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🔮 Posibles mejoras futuras
+
+- Notificaciones de nuevos mensajes y avisos escolares.
+- Registro de asistencia.
+- Gestión de calificaciones y evaluaciones.
+- Calendario de actividades y eventos escolares.
+- Paneles de estadísticas e informes académicos.
+- Recuperación de contraseñas y mejoras de seguridad.
+
+---
+
+## 👨‍💻 Estado del proyecto
+
+**Desarrollo en curso.**
+
+Las funcionalidades disponibles dependerán de la implementación actual de cada módulo.
+
+---
+
+Desarrollado con ❤️ utilizando **React, TypeScript y Vite**.
